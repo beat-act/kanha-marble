@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kanha Marble & Sanitary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --stone: #1a1714;
+      --warm: #2c2620;
+      --marble-white: #f5f0ea;
+      --cream: #ede5d8;
+      --gold: #c8a96e;
+      --gold-light: #e2c896;
+      --text-dim: #8a7f72;
+      --text-body: #3d3530;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--stone);
+      color: var(--marble-white);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 5%;
+      background: rgba(26,23,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,169,110,0.15);
+      transition: all 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+      line-height: 1.1;
+    }
+    .nav-logo span { display: block; font-size: 0.65rem; font-weight: 400; color: var(--text-dim); letter-spacing: 0.2em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      color: var(--cream); text-decoration: none;
+      font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: var(--stone);
+      padding: 9px 22px; border-radius: 2px;
+      text-decoration: none; font-size: 0.78rem;
+      font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); }
+
+    /* hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--cream); transition: 0.3s; }
+    .mobile-menu {
+      display: none; flex-direction: column;
+      position: fixed; top: 64px; left: 0; right: 0;
+      background: rgba(26,23,20,0.97);
+      padding: 24px 5%; gap: 20px; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--cream); text-decoration: none;
+      font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;
+      padding-bottom: 14px; border-bottom: 1px solid rgba(200,169,110,0.12);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(200,169,110,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 10% 80%, rgba(200,169,110,0.05) 0%, transparent 60%),
+        linear-gradient(160deg, #1a1714 0%, #221e1a 50%, #1a1714 100%);
+    }
+    .marble-lines {
+      position: absolute; inset: 0; z-index: 0; opacity: 0.04;
+      background-image:
+        repeating-linear-gradient(105deg, transparent, transparent 40px, rgba(255,255,255,0.5) 40px, rgba(255,255,255,0.5) 41px),
+        repeating-linear-gradient(15deg, transparent, transparent 80px, rgba(255,255,255,0.3) 80px, rgba(255,255,255,0.3) 81px);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 28px;
+    }
+    .hero-tag::before {
+      content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 600; line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--marble-white);
+      margin-bottom: 28px;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--text-dim); line-height: 1.7;
+      max-width: 500px; margin-bottom: 44px;
+      font-weight: 300;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold); color: var(--stone);
+      padding: 14px 32px; border-radius: 2px;
+      text-decoration: none; font-size: 0.82rem;
+      font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: all 0.25s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-outline {
+      border: 1px solid rgba(200,169,110,0.4); color: var(--cream);
+      padding: 14px 32px; border-radius: 2px;
+      text-decoration: none; font-size: 0.82rem;
+      font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: all 0.25s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 72px;
+      flex-wrap: wrap;
+    }
+    .stat { border-left: 1px solid rgba(200,169,110,0.3); padding-left: 20px; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 600; color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px; }
+
+    /* ─── SECTION COMMON ─── */
+    section { padding: 100px 5%; }
+    .section-tag {
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 600; line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(200,169,110,0.15);
+      border-bottom: 1px solid rgba(200,169,110,0.15);
+      padding: 18px 0;
+      background: var(--warm);
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-track span {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-dim); padding: 0 32px;
+    }
+    .marquee-track span.dot { color: var(--gold); padding: 0 8px; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─── PRODUCTS ─── */
+    .products { background: var(--warm); }
+    .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; flex-wrap: wrap; gap: 24px; }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .product-card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+    .product-card:first-child { grid-row: span 2; aspect-ratio: auto; }
+    .product-bg {
+      position: absolute; inset: 0;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .product-bg { transform: scale(1.04); }
+    /* individual card backgrounds */
+    .card-marble .product-bg {
+      background: linear-gradient(135deg, #2d2825 0%, #3d3530 30%, #4a3f38 60%, #2d2825 100%);
+    }
+    .card-marble .product-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        radial-gradient(ellipse 60% 40% at 30% 40%, rgba(240,230,215,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 60% at 70% 60%, rgba(200,180,160,0.1) 0%, transparent 50%),
+        repeating-linear-gradient(120deg, transparent, transparent 20px, rgba(255,255,255,0.02) 20px, rgba(255,255,255,0.02) 21px);
+    }
+    .card-tiles .product-bg {
+      background: linear-gradient(145deg, #1e2028 0%, #252830 50%, #1a1c22 100%);
+    }
+    .card-tiles .product-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(200,169,110,0.08) 39px, rgba(200,169,110,0.08) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(200,169,110,0.08) 39px, rgba(200,169,110,0.08) 40px);
+    }
+    .card-sanitary .product-bg {
+      background: radial-gradient(ellipse at 50% 30%, #2e3038 0%, #1a1c22 70%);
+    }
+    .card-sanitary .product-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(200,169,110,0.12) 0%, transparent 70%);
+    }
+    .card-granite .product-bg {
+      background: linear-gradient(135deg, #1c1c1c 0%, #2a2624 50%, #1c1c1c 100%);
+    }
+    .card-granite .product-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle 1px at 20% 30%, rgba(255,255,255,0.08) 0%, transparent 1px),
+        radial-gradient(circle 1px at 60% 70%, rgba(255,255,255,0.06) 0%, transparent 1px),
+        radial-gradient(circle 2px at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 2px),
+        radial-gradient(circle 1px at 40% 80%, rgba(200,169,110,0.1) 0%, transparent 1px);
+    }
+    .card-wall .product-bg {
+      background: linear-gradient(155deg, #282420 0%, #201c18 50%, #282420 100%);
+    }
+    .card-wall .product-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(200,169,110,0.06) 28px, rgba(200,169,110,0.06) 29px);
+    }
+    .card-bathroom .product-bg {
+      background: radial-gradient(ellipse at 30% 70%, #1e2830 0%, #161a1e 70%);
+    }
+
+    .product-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,8,6,0.9) 0%, rgba(10,8,6,0.2) 50%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 28px;
+    }
+    .product-icon {
+      font-size: 2.5rem; margin-bottom: 12px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+    }
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600;
+      color: var(--marble-white); line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .product-card:first-child .product-name { font-size: 2rem; }
+    .product-desc {
+      font-size: 0.78rem; color: rgba(237,229,216,0.6);
+      line-height: 1.5;
+    }
+    .product-tag {
+      display: inline-block; background: var(--gold);
+      color: var(--stone); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 1px;
+      margin-bottom: 10px;
+    }
+
+    /* ─── WHY US ─── */
+    .why { background: var(--stone); }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .why-visual {
+      position: relative; aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .why-circle {
+      width: 280px; height: 280px; border-radius: 50%;
+      border: 1px solid rgba(200,169,110,0.2);
+      position: absolute;
+      animation: pulse-ring 4s ease-in-out infinite;
+    }
+    .why-circle:nth-child(2) { width: 200px; height: 200px; animation-delay: 1s; }
+    .why-circle:nth-child(3) { width: 120px; height: 120px; animation-delay: 2s; background: rgba(200,169,110,0.04); }
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.02); }
+    }
+    .why-center {
+      position: relative; z-index: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem; font-weight: 600;
+      color: var(--gold); text-align: center; line-height: 1;
+    }
+    .why-center small { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-top: 6px; }
+    .why-features { display: flex; flex-direction: column; gap: 32px; }
+    .why-item { display: flex; gap: 20px; }
+    .why-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      border: 1px solid rgba(200,169,110,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .why-item h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-weight: 600; margin-bottom: 4px;
+    }
+    .why-item p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.65; }
+
+    /* ─── BRANDS ─── */
+    .brands { background: var(--warm); text-align: center; padding: 70px 5%; }
+    .brands h3 {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 44px;
+    }
+    .brands-row { display: flex; justify-content: center; align-items: center; gap: 48px; flex-wrap: wrap; }
+    .brand-pill {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 600;
+      color: var(--text-dim);
+      border: 1px solid rgba(200,169,110,0.15);
+      padding: 10px 24px; border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .brand-pill:hover { color: var(--gold); border-color: rgba(200,169,110,0.4); }
+
+    /* ─── CONTACT ─── */
+    .contact { background: var(--stone); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .contact-info h2 { margin-bottom: 16px; }
+    .contact-info p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 44px; }
+    .contact-details { display: flex; flex-direction: column; gap: 24px; }
+    .contact-item { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-item-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border: 1px solid rgba(200,169,110,0.25); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; margin-top: 2px;
+    }
+    .contact-item-text h5 { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+    .contact-item-text p { font-size: 0.88rem; color: var(--cream); line-height: 1.5; }
+    .contact-map-wrap {
+      background: var(--warm);
+      border: 1px solid rgba(200,169,110,0.1);
+      border-radius: 4px; overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .map-placeholder {
+      text-align: center; padding: 32px;
+    }
+    .map-placeholder .big-icon { font-size: 3rem; margin-bottom: 12px; }
+    .map-placeholder h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--marble-white); margin-bottom: 6px;
+    }
+    .map-placeholder p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 20px; }
+    .map-link {
+      display: inline-block;
+      background: var(--gold); color: var(--stone);
+      padding: 10px 24px; border-radius: 2px;
+      text-decoration: none; font-size: 0.78rem;
+      font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #0f0d0b;
+      padding: 48px 5% 28px;
+      border-top: 1px solid rgba(200,169,110,0.1);
+    }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; margin-bottom: 40px; }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 700; color: var(--gold);
+    }
+    .footer-logo span { display: block; font-family: 'DM Sans'; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 2px; }
+    .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.74rem; color: var(--text-dim); }
+    .footer-bottom span { color: var(--gold); }
+
+    /* ─── VIDEO SECTION ─── */
+    .video-section { background: var(--stone); padding: 100px 5%; }
+    .video-header { text-align: center; margin-bottom: 56px; }
+    .video-header .section-tag { justify-content: center; }
+    .video-header .section-tag::before { display: none; }
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .video-card {
+      position: relative; border-radius: 4px; overflow: hidden;
+      border: 1px solid rgba(200,169,110,0.12);
+      background: var(--warm);
+    }
+    .video-card.featured { grid-column: span 2; }
+    .video-embed-wrap {
+      position: relative; width: 100%; padding-bottom: 56.25%; /* 16:9 */
+      background: #0f0d0b;
+    }
+    .video-embed-wrap iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .video-label {
+      padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .video-label h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 600; color: var(--marble-white);
+    }
+    .video-label span {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); background: rgba(200,169,110,0.1);
+      padding: 4px 10px; border-radius: 1px;
+    }
+
+    /* upload card */
+    .video-upload-card {
+      border: 1px dashed rgba(200,169,110,0.25);
+      border-radius: 4px; background: var(--warm);
+      aspect-ratio: 16/9;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px; cursor: pointer; transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .video-upload-card:hover { border-color: var(--gold); background: rgba(200,169,110,0.04); }
+    .video-upload-card input[type=file] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .video-upload-card .upload-icon { font-size: 2rem; }
+    .video-upload-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; color: var(--marble-white);
+    }
+    .video-upload-card p { font-size: 0.75rem; color: var(--text-dim); }
+    #uploadedVideoWrap { display: none; }
+    #uploadedVideoWrap video { width: 100%; display: block; border-radius: 4px; }
+
+    /* ─── MAP ─── */
+    .contact-map-wrap iframe {
+      width: 100%; height: 100%; border: none; display: block;
+    }
+
+    /* ─── WHATSAPP FAB ─── */
+    .whatsapp-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+      text-decoration: none;
+      font-size: 1.5rem;
+      transition: transform 0.2s;
+      animation: fab-pop 0.5s 1s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    .whatsapp-fab:hover { transform: scale(1.1); }
+    @keyframes fab-pop {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .products-grid { grid-template-columns: 1fr 1fr; }
+      .product-card:first-child { grid-column: span 2; grid-row: span 1; aspect-ratio: 16/9; }
+      .why-grid { grid-template-columns: 1fr; gap: 48px; }
+      .why-visual { display: none; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .video-grid { grid-template-columns: 1fr; }
+      .video-card.featured { grid-column: span 1; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 72px 5%; }
+      .products-grid { grid-template-columns: 1fr; }
+      .product-card:first-child { grid-column: span 1; aspect-ratio: 4/3; }
+      .hero-stats { gap: 28px; }
+      .brands-row { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    Kanha Marble
+    <span>& Sanitary — Est. Nagar Untari</span>
+  </div>
+  <div class="nav-links">
+    <a href="#products">Products</a>
+    <a href="#videos">Videos</a>
+    <a href="#why">Why Us</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="tel:+918825185882">Call Now</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#products" onclick="toggleMenu()">Products</a>
+  <a href="#videos" onclick="toggleMenu()">Videos</a>
+  <a href="#why" onclick="toggleMenu()">Why Us</a>
+  <a href="#feedback" onclick="toggleMenu()">Feedback</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="tel:+918825185882" style="color:var(--gold)">📞 Call Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="marble-lines"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Nagar Untari, Jharkhand</div>
+    <h1>Premium <em>Marble</em><br>& Sanitary</h1>
+    <p class="hero-sub">Kajaria tiles, marble slabs, granite, and bathroom fittings — handpicked quality for homes that deserve the finest.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Explore Products</a>
+      <a href="#contact" class="btn-outline">Visit Our Shop</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat fade-up">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat fade-up">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat fade-up">
+        <div class="stat-num">200+</div>
+        <div class="stat-label">Tile Designs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Kajaria Tiles</span><span class="dot">✦</span>
+    <span>Marble Slabs</span><span class="dot">✦</span>
+    <span>Granite Flooring</span><span class="dot">✦</span>
+    <span>Bathroom Fittings</span><span class="dot">✦</span>
+    <span>Wall Tiles</span><span class="dot">✦</span>
+    <span>Sanitary Ware</span><span class="dot">✦</span>
+    <span>Premium Quality</span><span class="dot">✦</span>
+    <span>Kajaria Tiles</span><span class="dot">✦</span>
+    <span>Marble Slabs</span><span class="dot">✦</span>
+    <span>Granite Flooring</span><span class="dot">✦</span>
+    <span>Bathroom Fittings</span><span class="dot">✦</span>
+    <span>Wall Tiles</span><span class="dot">✦</span>
+    <span>Sanitary Ware</span><span class="dot">✦</span>
+    <span>Premium Quality</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="products-header">
+    <div>
+      <div class="section-tag">Our Collection</div>
+      <h2>What We<br>Offer</h2>
+    </div>
+    <p style="max-width:320px; color:var(--text-dim); font-size:0.88rem; line-height:1.7;">Every product is sourced from trusted brands to ensure lasting beauty and durability for your home.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card card-marble">
+      <div class="product-bg"></div>
+      <div class="product-overlay">
+        <div class="product-icon">🪨</div>
+        <div class="product-tag">Bestseller</div>
+        <div class="product-name">Marble Slabs</div>
+        <div class="product-desc">Italian & Indian marble varieties. Perfect for flooring, countertops, and feature walls.</div>
+      </div>
+    </div>
+    <div class="product-card card-tiles">
+      <div class="product-bg"></div>
+      <div class="product-overlay">
+        <div class="product-icon">🔲</div>
+        <div class="product-name">Kajaria Tiles</div>
+        <div class="product-desc">Authorized Kajaria dealer. Floor, wall, and designer tiles.</div>
+      </div>
+    </div>
+    <div class="product-card card-sanitary">
+      <div class="product-bg"></div>
+      <div class="product-overlay">
+        <div class="product-icon">🚿</div>
+        <div class="product-name">Sanitary Ware</div>
+        <div class="product-desc">Complete bathroom solutions — taps, showers, wash basins.</div>
+      </div>
+    </div>
+    <div class="product-card card-granite">
+      <div class="product-bg"></div>
+      <div class="product-overlay">
+        <div class="product-icon">🏔️</div>
+        <div class="product-name">Granite</div>
+        <div class="product-desc">Durable granite for kitchen tops and heavy-use surfaces.</div>
+      </div>
+    </div>
+    <div class="product-card card-wall">
+      <div class="product-bg"></div>
+      <div class="product-overlay">
+        <div class="product-icon">🧱</div>
+        <div class="product-name">Wall Tiles</div>
+        <div class="product-desc">Textured, glossy, and matt finishes for every room.</div>
+      </div>
+    </div>
+    <div class="product-card card-bathroom">
+      <div class="product-bg"></div>
+      <div class="product-overlay">
+        <div class="product-icon">🛁</div>
+        <div class="product-name">Bathroom Fittings</div>
+        <div class="product-desc">Premium CP fittings, shower panels, and accessories.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="why-grid">
+    <div class="why-visual">
+      <div class="why-circle"></div>
+      <div class="why-circle"></div>
+      <div class="why-circle"></div>
+      <div class="why-center">
+        15+
+        <small>Years of Trust</small>
+      </div>
+    </div>
+    <div class="why-features">
+      <div>
+        <div class="section-tag">Why Choose Us</div>
+        <h2>Built on Quality<br>& Trust</h2>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-icon">✦</div>
+        <div>
+          <h4>Authorized Kajaria Dealer</h4>
+          <p>Official dealership ensures genuine products, warranty, and the latest tile collections directly from the manufacturer.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-icon">🏠</div>
+        <div>
+          <h4>One-Stop Shop</h4>
+          <p>From foundation to finish — marble, tiles, granite, and all bathroom fittings under one roof in Nagar Untari.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-icon">💬</div>
+        <div>
+          <h4>Expert Guidance</h4>
+          <p>Our experienced team helps you choose the right material for your budget, space, and design vision.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-icon">🚚</div>
+        <div>
+          <h4>Local Delivery</h4>
+          <p>Serving Nagar Untari and surrounding areas with reliable and safe material delivery to your site.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<div class="brands">
+  <h3>Brands We Carry</h3>
+  <div class="brands-row">
+    <div class="brand-pill">Kajaria</div>
+    <div class="brand-pill">Somany</div>
+    <div class="brand-pill">Jaquar</div>
+    <div class="brand-pill">Hindware</div>
+    <div class="brand-pill">Parryware</div>
+    <div class="brand-pill">Kohler</div>
+  </div>
+</div>
+
+<!-- VIDEO SECTION -->
+<section class="video-section" id="videos">
+  <div class="video-header">
+    <div class="section-tag">See It Live</div>
+    <h2>Our Collection<br>in Action</h2>
+  </div>
+  <div class="video-grid">
+
+    <!-- Kajaria Official Video - featured -->
+    <div class="video-card featured">
+      <div class="video-embed-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/lidmgWzL2yk?rel=0&modestbranding=1&color=white"
+          title="Kajaria Tiles Collection"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div class="video-label">
+        <h4>Kajaria Tiles — 2026 Collection</h4>
+        <span>Official</span>
+      </div>
+    </div>
+
+    <!-- Upload your own video -->
+    <div class="video-card" id="uploadCard">
+      <div class="video-upload-card" id="uploadZone">
+        <input type="file" accept="video/*" id="videoFileInput" onchange="handleVideoUpload(event)" />
+        <div class="upload-icon">📹</div>
+        <h4>Upload Your Video</h4>
+        <p>Shop tour, product showcase, anything</p>
+      </div>
+      <div id="uploadedVideoWrap">
+        <video id="uploadedVideo" controls></video>
+        <div class="video-label">
+          <h4 id="uploadedVideoName">Your Video</h4>
+          <span style="cursor:pointer;" onclick="resetUpload()">✕ Remove</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kajaria TVC - Akshay Kumar -->
+    <div class="video-card">
+      <div class="video-embed-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/NWc-Oa2jf6Q?rel=0&modestbranding=1&color=white"
+          title="Kajaria Tiles TVC"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div class="video-label">
+        <h4>Kajaria — Brand Story</h4>
+        <span>TVC</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-tag">Find Us</div>
+      <h2>Visit Our<br>Showroom</h2>
+      <p>Come see our full collection in person. Our showroom displays hundreds of tile, marble, and fitting options to help you visualize the perfect look for your home.</p>
+      <div class="contact-details">
+        <div class="contact-item fade-up">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <h5>Address</h5>
+            <p>Shiv Shakti Hall, Main Road<br>Shri Banshidhar Nagar (Nagar Untari)<br>Jharkhand — 822121</p>
+          </div>
+        </div>
+        <div class="contact-item fade-up">
+          <div class="contact-item-icon">📞</div>
+          <div class="contact-item-text">
+            <h5>Phone</h5>
+            <p>+91 88251 85882</p>
+          </div>
+        </div>
+        <div class="contact-item fade-up">
+          <div class="contact-item-icon">🕐</div>
+          <div class="contact-item-text">
+            <h5>Shop Hours</h5>
+            <p>Mon – Sat: 9:00 AM – 8:00 PM<br>Sunday: 10:00 AM – 5:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-map-wrap" style="min-height:380px; border-radius:4px; overflow:hidden;">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.44!2d83.9!3d23.98!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398ea579dc9c6765%3A0xe64c821a89c0d1cb!2sKanha%20Marble%20%26%20Sanitary%20~%20Kajaria%20Tiles!5e0!3m2!1sen!2sin!4v1"
+        width="100%" height="100%" style="border:0; min-height:380px;"
+        allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FEEDBACK FORM -->
+<section style="background:var(--warm); padding:100px 5%;" id="feedback">
+  <div style="max-width:800px; margin:0 auto;">
+    <div class="section-tag">Get In Touch</div>
+    <h2 style="margin-bottom:12px;">Send Us a<br>Message</h2>
+    <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.7; margin-bottom:48px; max-width:480px;">Tile selection, pricing, delivery — kuch bhi poochna ho, form bharo. Hum jald respond karenge.</p>
+    <div style="
+      border-radius:6px;
+      overflow:hidden;
+      border:1px solid rgba(200,169,110,0.15);
+      box-shadow:0 8px 40px rgba(0,0,0,0.3);
+    ">
+      <iframe
+        id="JotFormIFrame-241982397645471"
+        title="Kanha Marble Feedback Form"
+        src="https://form.jotform.com/241982397645471"
+        style="width:100%; min-height:600px; border:none; display:block; background:#fff;"
+        scrolling="no"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">
+      Kanha Marble & Sanitary
+      <span>Nagar Untari · Jharkhand</span>
+    </div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#why">Why Us</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Kanha Marble & Sanitary. All rights reserved.</p>
+    <p>Made with <span>✦</span> in Jharkhand</p>
+  </div>
+</footer>
+
+<!-- WHATSAPP FAB -->
+<a class="whatsapp-fab" href="https://wa.me/918825185882" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<script>
+  // Mobile menu toggle
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // JotForm auto-resize
+  window.addEventListener('message', function(e) {
+    if (typeof e.data === 'object' && e.data.action === 'setHeight' && e.data.formID == '241982397645471') {
+      var iframe = document.getElementById('JotFormIFrame-241982397645471');
+      if (iframe) iframe.style.minHeight = e.data.height + 'px';
+    }
+  });
+
+  // Video upload handler
+  function handleVideoUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const video = document.getElementById('uploadedVideo');
+    video.src = url;
+    document.getElementById('uploadedVideoName').textContent = file.name.replace(/\.[^.]+$/, '');
+    document.getElementById('uploadZone').style.display = 'none';
+    document.getElementById('uploadedVideoWrap').style.display = 'block';
+  }
+  function resetUpload() {
+    document.getElementById('uploadedVideo').src = '';
+    document.getElementById('videoFileInput').value = '';
+    document.getElementById('uploadZone').style.display = 'flex';
+    document.getElementById('uploadedVideoWrap').style.display = 'none';
+  }
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      nav.style.padding = '12px 5%';
+      nav.style.background = 'rgba(15,13,11,0.95)';
+    } else {
+      nav.style.padding = '18px 5%';
+      nav.style.background = 'rgba(26,23,20,0.85)';
+    }
+  });
+</script>
+</body>
+</html>
